@@ -13,9 +13,8 @@ namespace CompsciIA
     public partial class Form1 : Form
     {
         //TODO: finish translating this to c# (was originally in python)
-using System.math;
-
-def correlation_matrix(matrix):
+        
+public int correlation_matrix(matrix){
   num_companies = len(matrix)
   num_days = len(matrix[0])
   std_dev = math.sqrt(num_days)
@@ -47,6 +46,7 @@ def correlation_matrix(matrix):
    }
 
   return result
+
 /* this is all stuff i use for testing
 A = [1,2,3,4,5,6]
 B = [1,2,3,3,2,1]
@@ -59,6 +59,7 @@ test_matrix = [A,B,C,D,E]
 result = correlation_matrix(test_matrix)
 print(result)
 */
+}
 
         public Form1()
         {
