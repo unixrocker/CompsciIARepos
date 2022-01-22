@@ -18,14 +18,34 @@ namespace CompsciIA
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.CenterToScreen();
+            this.SetControls();
         }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+        private void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            //Create Instance of the Import Excel Form
+            ImportExcelData frmImport = new ImportExcelData();
+
+            //Access the Event which is used by the Delegate
+            //Pass in a method on THIS FORM to the ImportExcelData Form
+            //This will cause the Deletegate on the ImportExcelData Form
+            //To access the method on this Form
+            frmImport.UpdateDataGridView += new ImportExcelData.UpdateDGVHandler(PopulateDataGridView);
+            
+            //Show the form
+            frmImport.ShowDialog();
+        }
+        //TODO: Add method that makes the excel data a matrix
     }
 }
 
 ---
-
-import math 
+//TODO: finish translating this to c# (was originally in python)
+using System.math;
 
 def correlation_matrix(matrix):
   num_companies = len(matrix)
@@ -33,28 +53,33 @@ def correlation_matrix(matrix):
   std_dev = math.sqrt(num_days)
   result = [[0 for _ in range(num_companies)] for _ in range(num_companies)]
 
-  for i in range(0, num_companies):
-    for j in range(i+1, num_companies):
-      print(f"{i}, {j} = {result}")
-      #print(f"Processing pair {i}, {j}")
-      #print(f"company {i} = {matrix[i]}")
-      #print(f"company {j} = {matrix[j]}")
+  for (int i = 0; i < num_companies; i++) {
+    for (j = i+1; j < num_companies; j++) {
+      print("{i}, {j} = {result}")
+      //print("Processing pair {i}, {j}")
+      //print("company {i} = {matrix[i]}")
+      //print("company {j} = {matrix[j]}")
+      //^^^All stuff I used for testing it 
       net_moves = 0
-      for k in range(0,num_days-1):
+      for k in range(0,num_days-1) {
           if matrix[i][k] < matrix[i][k+1] and matrix[j][k] < matrix[j][k+1]:
               net_moves = net_moves + 1
-          elif matrix[i][k] > matrix[i][k+1] and matrix[j][k] > matrix[j][k+1]:
+          else if matrix[i][k] > matrix[i][k+1] and matrix[j][k] > matrix[j][k+1]:
               net_moves = net_moves + 1
-          elif matrix[i][k] == matrix[i][k+1] or matrix[j][k] == matrix[j][k+1]:
+          else if matrix[i][k] == matrix[i][k+1] or matrix[j][k] == matrix[j][k+1]:
               net_moves = net_moves
           else:
               net_moves = net_moves - 1
-      if abs(net_moves) > std_dev:
+       }
+      if abs(net_moves) > std_dev: {
           print(f"Correlated Stocks {i}, {j} = {net_moves}")
           result[i][j] = 1
+          }
+       }
+   }
 
   return result
-
+/* this is all stuff i use for testing
 A = [1,2,3,4,5,6]
 B = [1,2,3,3,2,1]
 C = [1,2,1,2,1,2]
@@ -65,3 +90,4 @@ test_matrix = [A,B,C,D,E]
 
 result = correlation_matrix(test_matrix)
 print(result)
+*/
