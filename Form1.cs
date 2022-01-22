@@ -12,39 +12,7 @@ namespace CompsciIA
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            this.CenterToScreen();
-            this.SetControls();
-        }
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Dispose();
-        }
-        private void btnImportExcel_Click(object sender, EventArgs e)
-        {
-            //Create Instance of the Import Excel Form
-            ImportExcelData frmImport = new ImportExcelData();
-
-            //Access the Event which is used by the Delegate
-            //Pass in a method on THIS FORM to the ImportExcelData Form
-            //This will cause the Deletegate on the ImportExcelData Form
-            //To access the method on this Form
-            frmImport.UpdateDataGridView += new ImportExcelData.UpdateDGVHandler(PopulateDataGridView);
-            
-            //Show the form
-            frmImport.ShowDialog();
-        }
-        //TODO: Add method that makes the excel data a matrix
-    }
-}
-
----
-//TODO: finish translating this to c# (was originally in python)
+        //TODO: finish translating this to c# (was originally in python)
 using System.math;
 
 def correlation_matrix(matrix):
@@ -91,3 +59,36 @@ test_matrix = [A,B,C,D,E]
 result = correlation_matrix(test_matrix)
 print(result)
 */
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
+            this.SetControls();
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+        private void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            //Create Instance of the Import Excel Form
+            ImportExcelData frmImport = new ImportExcelData();
+
+            //Access the Event which is used by the Delegate
+            //Pass in a method on THIS FORM to the ImportExcelData Form
+            //This will cause the Deletegate on the ImportExcelData Form
+            //To access the method on this Form
+            frmImport.UpdateDataGridView += new ImportExcelData.UpdateDGVHandler(PopulateDataGridView);
+            
+            //Show the form
+            frmImport.ShowDialog();
+        }
+        //TODO: Add method that makes the excel data a matrix
+    }
+}
+
+---
