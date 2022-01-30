@@ -12,7 +12,7 @@ namespace CompsciIA
 {
     public partial class Form1 : Form
     {
-    /*
+        //still translating to c#
         public int correlation_matrix(matrix)
         {
             int num_companies = matrix.GetLength(0);
@@ -56,7 +56,8 @@ namespace CompsciIA
             test_matrix = [A,B,C,D,E]
             result = correlation_matrix(test_matrix)
             print(result)
-          */           
+            */
+            
         public Form1()
         {
             InitializeComponent();
@@ -99,5 +100,70 @@ namespace CompsciIA
 
             return dt;
         }
+               private void PopulateDataGridView(object sender, UpdateDataGridViewEventArgs e)
+        {
+            //*****************************************************
+            //This method is accessed from the ImportExcelData or
+            //ImportXMLData form via the delegate
+            //*****************************************************
+
+            //First we want to store the DataSet from the Import Process
+            //_ds = e.GetDataSet;
+
+            //1st Process the DataSet then assign to "_dt"
+            _dt = e.GetDataSet.Tables[0];
+            this.RemoveLeadingTrailingSpaces();
+
+            //2nd Set the DataSource of the DataGridView to the DataTable "_dt"
+            this.grdData.DataSource = _dt = ProcessDataSet(_dt);
+
+            //Set record count
+            this.lblTotal.Text = _dt.Rows.Count.ToString();
+
+            //Format columns in the DataGridView
+            this.FormatDataGridViewColumns();
+            this.FormatDataGridViewColumnHeaders();
+        }
+
+        private void RemoveLeadingTrailingSpaces()
+        {
+            var dataRows = _dt.AsEnumerable();
+            foreach (var row in dataRows)
+            {
+                var cellList = row.ItemArray.ToList();
+                row.ItemArray = cellList.Select(x => x.ToString().Trim()).ToArray();
+            };
+
+            _dt = dataRows.CopyToDataTable();
+            _dt.AcceptChanges();
+        }
+        
+        private void FormatDataGridViewColumnHeaders()
+        {
+            //Set the Background Color of the Column Header
+            this.grdData.EnableHeadersVisualStyles = false;
+            this.grdData.ColumnHeadersDefaultCellStyle.BackColor = Color.Blue;
+            this.grdData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+
+            //Set the Font for the Column Header
+            this.grdData.ColumnHeadersDefaultCellStyle.Font = new Font(new FontFamily("Arial"), 12, FontStyle.Bold);
+
+            //Autosize the coulumns
+            this.grdData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+        }
+        /*
+        private void FormatDataGridViewColumns()
+        {
+            this.grdData.Columns["Expiry"].DefaultCellStyle.Format = String.Format("d");
+            //Align Right
+            this.grdData.Columns["Expiry"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            //Format Column as Currency
+            this.grdData.Columns["InsuredValue"].DefaultCellStyle.Format = String.Format("C");
+            //Align Right
+            this.grdData.Columns["InsuredValue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+        }
+        */
+
     }
 }
