@@ -100,27 +100,17 @@ namespace CompsciIA
 
             return dt;
         }
-               private void PopulateDataGridView(object sender, UpdateDataGridViewEventArgs e)
+        
+        private void PopulateDataGridView(object sender, UpdateDataGridViewEventArgs e)
         {
-            //*****************************************************
-            //This method is accessed from the ImportExcelData or
-            //ImportXMLData form via the delegate
-            //*****************************************************
-
-            //First we want to store the DataSet from the Import Process
-            //_ds = e.GetDataSet;
-
-            //1st Process the DataSet then assign to "_dt"
-            _dt = e.GetDataSet.Tables[0];
+            
+            table = e.GetDataSet.Tables[0];
             this.RemoveLeadingTrailingSpaces();
 
-            //2nd Set the DataSource of the DataGridView to the DataTable "_dt"
-            this.grdData.DataSource = _dt = ProcessDataSet(_dt);
+            this.grdData.DataSource = table = ProcessDataSet(table);
 
-            //Set record count
-            this.lblTotal.Text = _dt.Rows.Count.ToString();
+            this.lblTotal.Text = table.Rows.Count.ToString();
 
-            //Format columns in the DataGridView
             this.FormatDataGridViewColumns();
             this.FormatDataGridViewColumnHeaders();
         }
@@ -140,18 +130,15 @@ namespace CompsciIA
         
         private void FormatDataGridViewColumnHeaders()
         {
-            //Set the Background Color of the Column Header
             this.grdData.EnableHeadersVisualStyles = false;
             this.grdData.ColumnHeadersDefaultCellStyle.BackColor = Color.Blue;
             this.grdData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
 
-            //Set the Font for the Column Header
             this.grdData.ColumnHeadersDefaultCellStyle.Font = new Font(new FontFamily("Arial"), 12, FontStyle.Bold);
 
-            //Autosize the coulumns
             this.grdData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
-        /*
+        /* not sure if i need this yet
         private void FormatDataGridViewColumns()
         {
             this.grdData.Columns["Expiry"].DefaultCellStyle.Format = String.Format("d");
